@@ -9,9 +9,12 @@ class EventForm(Form):
     primary_contact_name = StringField(u'Contact Name', validators=[validators.input_required()])
     primary_contact_email = StringField(u'Contact Email', validators=[validators.input_required()])
     primary_contact_phone = StringField(u'Contact Number', validators=[validators.input_required()])
+    alternate_contact_phone = StringField(u'Contact Number', validators=[validators.input_required()])
+
     course_website = StringField(u'Website')
     course_type = SelectField(u'Course Type', validators=[validators.input_required()],
                               choices=(("alpha", "Alpha"), ("youthalpha", "Alpha for Youth")))
+
     denomination = StringField(u'Denomination')
     language = StringField(u'Main Language', validators=[validators.input_required()])
     venue_name = StringField(u'Venue Name', validators=[validators.input_required()])

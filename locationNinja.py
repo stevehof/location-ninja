@@ -13,36 +13,44 @@ db = SQLAlchemy(app)
 class Event(db.Model):
     __tablename__ = "Event"
     id = db.Column(db.String, primary_key=True)
-    course_name = db.Column(db.String(80), unique=False)
-    course_province = db.Column(db.String(120), unique=False)
-    primary_contact_name = db.Column(db.String(120), unique=False)
-    primary_contact_email = db.Column(db.String(120), unique=False)
-    primary_contact_phone = db.Column(db.String(120), unique=False)
-    course_website = db.Column(db.String(120), unique=False)
-    course_type = db.Column(db.String(120), unique=False)
-    denomination = db.Column(db.String(120), unique=False)
-    language = db.Column(db.String(120), unique=False)
-    venue_name = db.Column(db.String(120), unique=False)
+    course_name = db.Column(db.String(255), unique=False)
+    course_province = db.Column(db.String(255), unique=False)
+    contact_name = db.Column(db.String(255), unique=False)
+    contact_email = db.Column(db.String(255), unique=False)
+    contact_phone = db.Column(db.String(255), unique=False)
+    alternate_contact_phone = db.Column(db.String(255), unique=False)
+    course_website = db.Column(db.String(255), unique=False)
+    course_type = db.Column(db.String(255), unique=False)
+    denomination = db.Column(db.String(255), unique=False)
+    language = db.Column(db.String(255), unique=False)
+    venue_name = db.Column(db.String(255), unique=False)
     venue_location = db.Column(db.String(255), unique=False)
-    venue_street = db.Column(db.String(120), unique=False)
-    venue_suburb = db.Column(db.String(120), unique=False)
-    venue_town = db.Column(db.String(120), unique=False)
-    venue_postcode = db.Column(db.String(120), unique=False)
-    venue_country = db.Column(db.String(120), unique=False)
-    organisation_name = db.Column(db.String(120), unique=False)
+    venue_street = db.Column(db.String(255), unique=False)
+    venue_suburb = db.Column(db.String(255), unique=False)
+    venue_town = db.Column(db.String(255), unique=False)
+    venue_postcode = db.Column(db.String(255), unique=False)
+    venue_country = db.Column(db.String(255), unique=False)
+    organisation_name = db.Column(db.String(255), unique=False)
     resources = db.Column(db.String(255), unique=False)
     gps_loc = db.Column(db.String(255), unique=False)
+    courses_annual = db.Column(db.String(10), unique=False)
+    course_email = db.Column(db.String(255), unique=False)
+    leader_title = db.Column(db.String(255), unique=False)
+    leader_name = db.Column(db.String(255), unique=False)
+    leader_surname = db.Column(db.String(255), unique=False)
+    leader_email = db.Column(db.String(255), unique=False)
 
 
-    def __init__ (self, name, location):
+    def __init__ (self, name, province):
         self.id = Uid.uid_id_str()
-        self.name = name
-        self.location = location
+        self.course_name = name
+        self.course_province = province
 
     def __repr__(self):
-        return 'Event %s @ %s' % (self.course_name, self.course_province)
+        return 'Event:%s %s @ %s' % (self.id, self.course_name, self.course_province)
 
 
+@app.route('/')
 @app.route('/')
 def hello_world():
     return 'Hello World!'
@@ -71,6 +79,11 @@ def user():
         return redirect(url_for('try'))
     return render_template("registerEvent.html",form=form)
 
+
+@app.route('/display/', methods=['GET', 'POST'])
+def display():
+    events = db.session.query(Event).order_by(Event.course_name).all()
+    return "<br>".join([str(e) for e in events])
 
 
 if __name__ == '__main__':
