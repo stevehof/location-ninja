@@ -5,8 +5,15 @@ from flask import Flask, flash, request, redirect, url_for, render_template
 from flask_sqlalchemy import SQLAlchemy
 import forms
 import Uid
+import argparse
+import os
+import sys
+#os.environ["SERVER_SOFTWARE"] = "Development/1"
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///location-ninja.db'
+if len(sys.argv) > 1 and sys.argv[1] == "--dev":
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///location-ninja.db'
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+gaerdbms:///eastern-hawk-788:locationninjadb'
 app.secret_key = 'why would I tell you my secret key?'
 db = SQLAlchemy(app)
 
@@ -82,10 +89,18 @@ def user():
 
 @app.route('/display/', methods=['GET', 'POST'])
 def display():
-    events = db.session.query(Event).order_by(Event.course_name).all()
-    return "<br>".join([str(e) for e in events])
+    events = db.session.query(Event).order_by(Event.course_name).limit(1).all()
+    return render_template("display.html",records=events)
+
+@app.route('/import/', methods=['GET', 'POST'])
+def import_data_func():
+    import importdata
+    importdata.importdata()
+    #os.environ["SERVER_SOFTWARE"] = "Prod/1"
+    return "Success"
+
 
 
 if __name__ == '__main__':
     db.create_all(app=app)
-    app.run(debug=True)
+    app.run(debug=True,)#port=80)

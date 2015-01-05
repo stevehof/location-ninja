@@ -1,0 +1,11 @@
+{% macro render_event(event) %}
+    <div id="course_name">{{ event.course_name }}</div>
+<div id="course_location">{{ event.venue_location.replace(" ","+") }}</div>
+<div id="gmap"><iframe
+  width="600"
+  height="450"
+  frameborder="0" style="border:0"
+  src={{"https://www.google.com/maps/embed/v1/search?key=AIzaSyDqrlnahoL6SVCdib42XWeGKgqsrEJrhBo&q=%s" % event.venue_location.replace(" ","+") }}>
+</iframe></div>
+<br>
+{% endmacro %}

@@ -5,26 +5,35 @@ __author__ = 'Steve'
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+import googledatastore as datastore
+
 import csv
 import re
-import email
-
-
+import os
+import sys
 non_decimal = re.compile(r'[^\d.]+')
 email_address = re.compile(r'[^@]+@[^@]+\.[^@]+')
 
-engine = create_engine('sqlite:///location-ninja.db', convert_unicode=True)
-db_session = scoped_session(sessionmaker(autocommit=False,
-                                         autoflush=False,
-                                         bind=engine))
-Base = declarative_base()
-Base.query = db_session.query_property()
+def create_session():
+    if len(sys.argv) > 1 and sys.argv[1] == "--dev":
+        engine = create_engine('sqlite:///location-ninja.db', convert_unicode=True,paramstyle="format")
+    else:
+        engine = create_engine('mysql+gaerdbms:///locationninjadb', convert_unicode=True,paramstyle="format")
+    db_session = scoped_session(sessionmaker(autocommit=False,
+                                             autoflush=False,
+                                             bind=engine))
+    Base = declarative_base()
+    Base.query = db_session.query_property()
+    Base.metadata.create_all(bind=engine)
+    return db_session, Base
 
-def importdata ():
+def importdata (db_session=None):
 
     # import all modules here that might define models so that
     # they will be registered properly on the metadata.  Otherwise
     # you will have to import them first before calling init_db()
+    if not db_session:
+        Base, db_session = create_session()
     from locationNinja import Event
     with open("data.csv","rb") as csvfile:
         records = csv.reader(csvfile,delimiter=";")
@@ -54,11 +63,6 @@ def importdata ():
             except Exception as e:
                 pass
 
-
-
-    Base.metadata.create_all(bind=engine)
-
-
 def assign_to_details(details, row):
     details["course_province"] = row[0]
     details["course_name"] = row[1]
@@ -70,7 +74,7 @@ def assign_to_details(details, row):
     details["denomination"] = row[7]
     details["language"] = row[8]
     details["venue_name"] = row[9]
-    details["venue_location"] = row[10]
+    details["venue_location"] = row[10].replace("\n"," ")
     details["venue_street"] = row[11]
     details["venue_suburb"] = row[12]
     details["venue_town"] = row[13]

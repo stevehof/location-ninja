@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+{% from "_event.html" import render_event %}
+{% for event in records %}
+<div>
+    {{ render_event(event) }}
+</div>
+{% endfor %}
+</body>
+</html>

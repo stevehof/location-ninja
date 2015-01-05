@@ -5,3 +5,4 @@ Werkzeug==0.9.6
 Flask-Admin
 Flask-Login
 Flask-SQLAlchemy
+pysqlite
