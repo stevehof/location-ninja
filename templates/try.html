@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <link rel="stylesheet" type="text/css" href="/static/site.css">
+    <meta charset="UTF-8">
+    <title>Try</title>
+</head>
+<body>
+{% from "_formhelpers.html" import render_field %}
+<section id="content">
+    <div id="try-header">
+
+    <h1>Try Alpha</h1>
+
+
+    <h2><p>Alpha is a series of interactive sessions that freely explore the basics of the Christian faith. No pressure. No follow up. No charge.</p></h2>
+
+
+    <div id="find-alpha">
+        <h2 class="find-header translate" data-translate="6">Find an Alpha near you</h2>
+
+        <form  method=post action="/find/">
+
+            {{ render_field(form.country) }}
+            {{ render_field(form.location) }}
+
+            <input type="submit" id="try-submit" class="translate" data-translate="31" data-translate-type="value" value="Go">
+
+            <div class="try-loading-spinner"></div>
+
+        </form>
+    </div>
+
+
+    <div class="try-description"><p><strong>Al</strong><strong>pha runs in churches, bars, coffee shops and homes all around the globe. Typically Alpha has around ten sessions and includes food, a short talk and a discussion at the end where you can share your thoughts. Alpha really is for anyone who’s curious. The talks are designed to encourage debate and explore the basics of the Christian faith in a friendly, honest and informal e</strong><strong>nvironment.</strong></p></div>
+
+</div>
+      </section>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+{% from "_formhelpers.html" import render_field %}
+<form method=post action="/register/">
+  <dl>
+    {{ render_field(form.name) }}
+    {{ render_field(form.location) }}
+  </dl>
+  <p><input type="submit" value="Register">
+</form>
+</body>
+</html>

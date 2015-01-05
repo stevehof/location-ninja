@@ -1,0 +1,58 @@
+#content{
+padding: 1.5em;
+width: 100%;
+max-width: 770px;
+margin: 0 auto;
+background-color:#666;
+font-family: 'AvantGarde',Helvetica,Arial,sans-serif;
+}
+#try-header {
+color: #fff;
+}
+#try-header h1 {
+font-size: 6.5em;
+margin: 0 0 .2em !important;
+}
+body{
+background-color:#DDD;
+}
+h1, h2, h3 {
+font-family: 'AvantGarde',Helvetica,Arial,sans-serif;
+}
+try-header h2 {
+margin: 0 0 .5em;
+}
+h2 {
+font-size: 1.75em;
+line-height: 1.3em;
+margin-bottom: .3em;
+font-weight: 600;
+}
+form {
+display: block;
+margin-top: 0em;
+}
+#find-alpha #try-country {
+background: #fff;
+}
+#find-alpha #try-country, #find-alpha #try-postcode {
+width: 100%;
+font-size: 19px;
+margin-bottom: 20px;
+
+font-weight: 600;
+}
+#find-alpha #try-submit {
+    display: block;
+    margin: 0 auto;
+    padding: 5px 20px;
+    max-width: 5em;
+    border: none;
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+    text-align: center;
+    font-size: 1.4em;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #dc071a;
+}
